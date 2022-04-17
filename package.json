@@ -6,7 +6,13 @@
   "workspaces": [
     "packages/*"
   ],
+  "scripts": {
+    "build:ts": "tsc -b tsconfig.json"
+  },
   "devDependencies": {
     "lerna": "^4.0.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.1"
   }
 }

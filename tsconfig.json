@@ -5,6 +5,9 @@
       "lib": ["es2017", "esnext.asynciterable"],
       "typeRoots": ["node_modules/@types"],
       "allowSyntheticDefaultImports": true,
+      "composite": true,
+      "declarationMap": true,
+      "downlevelIteration": true,
       "experimentalDecorators": true,
       "emitDecoratorMetadata": true,
       "forceConsistentCasingInFileNames": true,
@@ -24,7 +27,8 @@
         "@canisters":["packages/canisters/*"]
       }
     },
-    "include": ["tests/**/*.ts" ],
-    "exclude": ["node_modules",]
+    "references": [
+      { "path": "packages/types" },
+    ]
   }
   

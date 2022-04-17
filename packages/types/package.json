@@ -1,5 +1,5 @@
 {
-  "name": "@astrox/icsnap",
+  "name": "@astrox/icsnap-types",
   "version": "0.0.1",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -31,11 +31,5 @@
     "lint:style:fix": "yarn run lint:style --fix",
     "test": "exit 0"
   },
-  "dependencies": {
-    "@astrox/icsnap-types": "^0.0.1",
-    "@dfinity/identity": "^0.11.0",
-    "@metamask/key-tree": "^3.0.1",
-    "@types/secp256k1": "^4.0.3",
-    "secp256k1": "^4.0.3"
-  }
+  "dependencies": {}
 }
