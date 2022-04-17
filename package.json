@@ -1,0 +1,12 @@
+{
+  "name": "root",
+  "private": true,
+  "author": "AstroX <dev@astrox.network>",
+  "license": "(Apache-2.0 AND MIT)",
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  }
+}
