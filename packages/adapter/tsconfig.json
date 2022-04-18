@@ -15,7 +15,9 @@
         "rootDir": "./src",
         "sourceMap": true,
         "strict": true,
-        "target": "es2017"
+        "target": "es2017",
+        "typeRoots": ["node_modules/@types", "src/types"],
+        "lib": ["es5", "es6", "dom"],
       },
       "include": [],
       "references": []

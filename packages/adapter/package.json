@@ -31,5 +31,9 @@
     "lint:style:fix": "yarn run lint:style --fix",
     "test": "exit 0"
   },
-  "devDependencies": {}
+  "dependencies": {
+    "@astrox/icsnap-types": "^0.0.1",
+    "@dfinity/agent": "^0.11.0",
+    "@dfinity/identity": "^0.11.0"
+  }
 }
