@@ -1,3 +1,5 @@
+import { MetamaskICPRpcRequest } from './methods';
+
 export type ICPNetwork = 'mainnet' | 'local';
 export interface UnitConfiguration {
   symbol: string;
@@ -14,3 +16,19 @@ export interface SnapConfig {
   };
   unit?: UnitConfiguration;
 }
+
+export interface WalletEnableRequest {
+  method: 'wallet_enable';
+  params: object[];
+}
+
+export interface GetSnapsRequest {
+  method: 'wallet_getSnaps';
+}
+
+export interface SnapRpcMethodRequest {
+  method: string;
+  params: [MetamaskICPRpcRequest];
+}
+
+export type MetamaskRpcRequest = WalletEnableRequest | GetSnapsRequest | SnapRpcMethodRequest;

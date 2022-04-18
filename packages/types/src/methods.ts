@@ -22,3 +22,32 @@ export type MetamaskState = {
     messages: ArrayBuffer[];
   };
 };
+
+// icp methods
+export interface GetIdentityRequest {
+  method: 'icp_getIdentity';
+}
+
+export interface ConfigureRequest {
+  method: 'icp_configure';
+  params: {
+    configuration: SnapConfig;
+  };
+}
+
+export interface SignRequest {
+  method: 'icp_sign';
+  params: {
+    message: ArrayBuffer;
+  };
+}
+export interface SignRawMessageRequest {
+  method: 'icp_signRawMessage';
+  params: {
+    message: string;
+  };
+}
+
+export type MetamaskICPRpcRequest = ConfigureRequest | GetIdentityRequest | SignRequest | SignRawMessageRequest;
+
+type Method = MetamaskICPRpcRequest['method'];

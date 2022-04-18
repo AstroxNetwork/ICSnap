@@ -1,8 +1,17 @@
+import { MetamaskICPRpcRequest } from './methods';
+
+export type FMethodCallback = (originString: string, requestObject: MetamaskICPRpcRequest) => Promise<unknown>;
+
 export interface Wallet {
-  // registerRpcMessageHandler: (fn: FMethodCallback) => unknown;
+  registerRpcMessageHandler: (fn: FMethodCallback) => unknown;
   request(options: { method: string; params?: unknown[] }): unknown;
 }
 
+export interface SignRawMessageResponse {
+  signature: string;
+  confirmed: boolean;
+  error: Error;
+}
 export interface WalletEnableParam {
   wallet_snap: {
     [snapId: string]: {

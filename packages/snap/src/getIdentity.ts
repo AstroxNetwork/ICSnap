@@ -3,7 +3,7 @@ import { MetamaskState, SnapMethods, Wallet } from '@astrox/icsnap-types';
 import Secp256k1 from 'secp256k1';
 import { Secp256k1KeyIdentity } from '@dfinity/identity';
 
-export async function getKeyPair(wallet: Wallet): Promise<Secp256k1KeyIdentity> {
+export async function getIdentity(wallet: Wallet): Promise<Secp256k1KeyIdentity> {
   const snapState = (await wallet.request({ method: 'snap_manageState', params: ['get'] })) as MetamaskState;
   const { derivationPath } = snapState.icp.config;
   const [, , , account, change, addressIndex] = derivationPath.split('/');
