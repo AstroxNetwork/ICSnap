@@ -1,0 +1,22 @@
+{
+  "version": "0.0.1",
+  "proposedName": "ICSnap",
+  "description": "The ICP snap.",
+  "source": {
+    "shasum": "gVw1d+cMCaN0qsjnhuztKsO5WBc8LZ134LwYfbdH2r0=",
+    "location": {
+      "npm": {
+        "filePath": "dist/bundle.js",
+        "packageName": "@astrox/icsnap",
+        "registry": "https://registry.npmjs.org/"
+      }
+    }
+  },
+  "initialPermissions": {
+    "endowment:network-access": {},
+    "snap_confirm": {},
+    "snap_getBip44Entropy_223": {},
+    "snap_manageState": {}
+  },
+  "manifestVersion": "0.1"
+}

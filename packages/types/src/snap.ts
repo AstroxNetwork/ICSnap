@@ -41,4 +41,5 @@ export interface ICPSnapApi {
   configure(configuration: Partial<SnapConfig>): Promise<void>;
   sign(message: ArrayBuffer): Promise<Signature>;
   signRawMessage(message: string): Promise<SignRawMessageResponse>;
+  getPrincipal(): Promise<string>;
 }

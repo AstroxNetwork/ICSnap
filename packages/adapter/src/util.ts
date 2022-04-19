@@ -14,7 +14,7 @@ export type GetSnapsResponse = {
     initialPermissions?: { [k: string]: unknown };
   };
 };
-async function getWalletSnaps(): Promise<GetSnapsResponse> {
+export async function getWalletSnaps(): Promise<GetSnapsResponse> {
   return (await window.ethereum.request({
     method: 'wallet_getSnaps',
   })) as GetSnapsResponse;

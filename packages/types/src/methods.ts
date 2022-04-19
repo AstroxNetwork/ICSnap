@@ -48,6 +48,10 @@ export interface SignRawMessageRequest {
   };
 }
 
-export type MetamaskICPRpcRequest = ConfigureRequest | GetIdentityRequest | SignRequest | SignRawMessageRequest;
+export interface GetPrincipal {
+  method: 'icp_getPrincipal';
+}
+
+export type MetamaskICPRpcRequest = ConfigureRequest | GetIdentityRequest | SignRequest | SignRawMessageRequest | GetPrincipal;
 
 type Method = MetamaskICPRpcRequest['method'];

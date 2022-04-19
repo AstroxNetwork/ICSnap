@@ -6,10 +6,11 @@ import { Secp256k1KeyIdentity } from '@dfinity/identity';
 export async function getIdentity(wallet: Wallet): Promise<Secp256k1KeyIdentity> {
   const snapState = (await wallet.request({ method: 'snap_manageState', params: ['get'] })) as MetamaskState;
   const { derivationPath } = snapState.icp.config;
-  const [, , , account, change, addressIndex] = derivationPath.split('/');
-
+  const [, , coinType, account, change, addressIndex] = derivationPath.split('/');
+  const bip44Code = coinType.replace("'", '');
+  console.log({ bip44Code });
   const bip44Node = (await wallet.request({
-    method: SnapMethods.getBip44Entropy,
+    method: `snap_getBip44Entropy_${bip44Code}`,
     params: [],
   })) as JsonBIP44CoinTypeNode;
 

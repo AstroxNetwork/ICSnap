@@ -34,7 +34,7 @@ export const defaultConfiguration = icpMainnetConfiguration;
 export function getDefaultConfiguration(networkName?: string): SnapConfig {
   switch (networkName) {
     case 'mainnet':
-      console.log('ICP mainnett network selected');
+      console.log('ICP mainnet network selected');
       return icpMainnetConfiguration;
     case 'local':
       console.log('ICP local network selected');
@@ -68,7 +68,7 @@ export async function configure(wallet: Wallet, networkName: string, overrides?:
   //   const api = await getApiFromConfig(configuration);
   //   const apiNetworkName = await api.stateNetworkName();
   // check if derivation path is valid
-  if (bip44Code != '423') {
+  if (bip44Code != '223') {
     throw new Error('Wrong CoinType in derivation path');
   }
   const state = (await wallet.request({ method: 'snap_manageState', params: ['get'] })) as MetamaskState;
