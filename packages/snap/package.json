@@ -40,7 +40,6 @@
     "@metamask/snaps-cli": "^0.10.7",
     "@types/deepmerge": "^2.2.0",
     "@types/secp256k1": "^4.0.3",
-    "@zondax/filecoin-signing-tools": "^0.20.0",
     "deepmerge": "^4.2.2",
     "secp256k1": "^4.0.3",
     "ts-node": "^10.7.0",
