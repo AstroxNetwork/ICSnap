@@ -35,10 +35,12 @@
   "dependencies": {
     "@astrox/icsnap-types": "^0.0.1",
     "@dfinity/identity": "^0.11.0",
+    "@dfinity/candid": "^0.11.0",
     "@metamask/key-tree": "^3.0.1",
     "@metamask/snaps-cli": "^0.10.7",
     "@types/deepmerge": "^2.2.0",
     "@types/secp256k1": "^4.0.3",
+    "@zondax/filecoin-signing-tools": "^0.20.0",
     "deepmerge": "^4.2.2",
     "secp256k1": "^4.0.3",
     "ts-node": "^10.7.0",

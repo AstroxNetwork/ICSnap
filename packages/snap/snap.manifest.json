@@ -3,7 +3,7 @@
   "proposedName": "ICSnap",
   "description": "The ICP snap.",
   "source": {
-    "shasum": "gVw1d+cMCaN0qsjnhuztKsO5WBc8LZ134LwYfbdH2r0=",
+    "shasum": "RrhMQP0D3x1zV7hu+1NqCcY1bkFISYKX0CUC3lNZ7gs=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",

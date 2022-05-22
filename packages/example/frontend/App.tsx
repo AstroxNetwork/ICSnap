@@ -5,7 +5,6 @@ import { Intro } from "./Intro"
 function App() {
   return (
     <div className="App">
-      <Auth />
       <Intro />
     </div>
   )

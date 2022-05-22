@@ -3,7 +3,6 @@
     "compilerOptions": {
       "target": "es2017",
       "lib": ["es2017","dom"],
-      "typeRoots": ["node_modules/@types"],
       "allowSyntheticDefaultImports": true,
       "composite": true,
       "declarationMap": true,
@@ -26,7 +25,11 @@
       "baseUrl": "scripts",
       "paths": {
         "@canisters":["packages/canisters/*"]
-      }
+      },
+      "typeRoots": [
+        "./node_modules/@types",
+        "./@types"
+      ]
     },
     "references": [
       { "path": "packages/types" },
