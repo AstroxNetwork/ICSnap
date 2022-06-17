@@ -1,6 +1,7 @@
-dist
-build
+dist/
+build/
 .idea
 *.log
-node_modules
+node_modules/
 .DS_store
+.vscode/
