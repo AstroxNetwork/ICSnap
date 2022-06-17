@@ -9,9 +9,8 @@ yarn install && yarn build:all && yarn demo:local
 
 ## Components and install instructions
 
-1. Metamask Flask
-   uninstall/disable old metamask, and install 👇
-   Metamask Flask: [download](https://metamask.io/flask/)
+1. [Download Metamask Flask](https://metamask.io/flask/)
+   and uninstall/disable old metamask
 
 2. Go to example page or any supported page, install ICSnap before run
 
