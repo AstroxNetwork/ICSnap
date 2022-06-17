@@ -1,8 +1,9 @@
 {
   "name": "@astrox/icsnap",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": false,
   "main": "build/index.js",
+  "files": ["dist", "snap.manifest.json"],
   "author": "AstroX <dev@astrox.network>",
   "license": "(Apache-2.0 AND MIT)",
   "homepage": "https://github.com/AstroxNetwork",
