@@ -15,6 +15,7 @@
     "build:all": "yarn clean && yarn build:types && yarn build:snap && yarn build:adapter && yarn build:example",
     "start:snap": "lerna run serve --scope @astrox/icsnap",
     "start:example:local": "cd packages/example && yarn run dev",
+    "start:example:production": "cd packages/example && yarn run dev",
     "bootstrap": "lerna bootstrap",
     "demo:local": "concurrently  --raw --kill-others \"yarn run start:snap\" \"yarn run start:example:local\""
   },
@@ -22,6 +23,7 @@
     "lerna": "^4.0.0"
   },
   "dependencies": {
+    "@types/node": "^18.0.0",
     "concurrently": "^7.1.0",
     "tslib": "^2.3.1"
   }

@@ -11,8 +11,8 @@ export interface SnapInitializationResponse {
 }
 
 export async function initiateICPSnap(): Promise<SnapInitializationResponse> {
-  // const snapId = process.env.REACT_APP_SNAP_ID ? process.env.REACT_APP_SNAP_ID : defaultSnapId
-  const snapId = defaultSnapId
+  const snapId = process.env.SNAP_ID
+  // const snapId = defaultSnapId
   try {
     console.log("Attempting to connect to snap...")
 

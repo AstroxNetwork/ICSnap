@@ -5,6 +5,7 @@ import dfxJson from "./dfx.json"
 import fs from "fs"
 
 const isDev = process.env["DFX_NETWORK"] !== "ic"
+const snapId = process.env["SNAP_ID"]
 
 type Network = "ic" | "local"
 
@@ -12,7 +13,7 @@ interface CanisterIds {
   [key: string]: { [key in Network]: string }
 }
 
-let canisterIds: CanisterIds
+let canisterIds: CanisterIds | undefined
 try {
   canisterIds = JSON.parse(
     fs
@@ -49,7 +50,7 @@ const aliases = Object.entries(dfxJson.canisters).reduce(
 
 // Generate canister ids, required by the generated canister code in .dfx/local/canisters/*
 // This strange way of JSON.stringifying the value is required by vite
-const canisterDefinitions = Object.entries(canisterIds).reduce(
+const canisterDefinitions = Object.entries(canisterIds as CanisterIds).reduce(
   (acc, [key, val]) => ({
     ...acc,
     [`process.env.${key.toUpperCase()}_CANISTER_ID`]: isDev
@@ -91,6 +92,9 @@ export default defineConfig({
     ...canisterDefinitions,
     "process.env.NODE_ENV": JSON.stringify(
       isDev ? "development" : "production",
+    ),
+    "process.env.SNAP_ID": JSON.stringify(
+      snapId ?? "local:http://localhost:8081",
     ),
   },
 })
