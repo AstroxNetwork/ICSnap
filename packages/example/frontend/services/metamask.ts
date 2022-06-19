@@ -1,5 +1,9 @@
 import { SnapRpcMethodRequest } from "@astrox/icsnap-types"
-import { MetamaskICPSnap, enableICPSnap } from "@astrox/icsnap-adapter"
+import {
+  MetamaskICPSnap,
+  enableICPSnap,
+  SnapIdentity,
+} from "@astrox/icsnap-adapter"
 
 export const defaultSnapId = "local:http://localhost:8081"
 
@@ -31,4 +35,13 @@ export async function initiateICPSnap(): Promise<SnapInitializationResponse> {
 
 export async function isICPSnapInstalled(): Promise<boolean> {
   return isInstalled
+}
+
+export async function createSnapIdentity(
+  snap: MetamaskICPSnap,
+): Promise<SnapIdentity> {
+  const api = await snap.getICPSnapApi()
+  const publicKey = await api.getRawPublicKey()
+  const principal = await api.getPrincipal()
+  return new SnapIdentity(api, publicKey, principal)
 }

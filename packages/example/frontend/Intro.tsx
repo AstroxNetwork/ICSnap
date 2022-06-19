@@ -2,19 +2,21 @@ import React, { useCallback, useEffect, useState } from "react"
 import { counter } from "canisters/counter"
 import logo from "./assets/logo-dark.svg"
 import { initiateICPSnap } from "./services/metamask"
-import { MetamaskICPSnap } from "@astrox/icsnap-adapter"
-import { ICPSnapApi, SignRawMessageResponse } from "@astrox/icsnap-types"
-import { Signature } from "@dfinity/agent"
-import { Secp256k1KeyIdentity } from "@dfinity/identity"
+import { SnapIdentity } from "@astrox/icsnap-adapter"
+import { SignRawMessageResponse } from "@astrox/icsnap-types"
 
 export function Intro() {
   const [principal, setPrincipal] = useState<string | undefined>(undefined)
-  const [api, setApi] = useState<ICPSnapApi | undefined>(undefined)
+
   const [installed, setInstalled] = useState<boolean>(false)
   const [message, setMessage] = useState<string | undefined>(undefined)
   const [signedMessage, setSignedMessage] = useState<
     SignRawMessageResponse | undefined
   >(undefined)
+
+  const [snapIdentity, setSnapIdentity] = useState<SnapIdentity | undefined>(
+    undefined,
+  )
 
   const installSnap = useCallback(async () => {
     const installResult = await initiateICPSnap()
@@ -22,27 +24,28 @@ export function Intro() {
       setInstalled(false)
     } else {
       setInstalled(true)
-      setApi(await installResult.snap?.getICPSnapApi())
+      setSnapIdentity(await installResult.snap?.createSnapIdentity())
     }
   }, [])
 
-  const getPrincipal = async () => {
-    setPrincipal(await api?.getPrincipal())
+  const getPrincipal = () => {
+    console.log(snapIdentity?.getPrincipal()!.toText())
+    setPrincipal(snapIdentity?.getPrincipal()!.toText())
   }
 
   const signMessage = async () => {
-    const signed = await api?.signRawMessage(message!)
+    const signed = await snapIdentity?.signRawMessage(message!)
     console.log({ signed })
-    setSignedMessage(signed)
+    setSignedMessage(signed!)
   }
 
   useEffect(() => {
-    if (!api) {
+    if (!snapIdentity) {
       installSnap()
     } else {
       getPrincipal()
     }
-  }, [api])
+  }, [snapIdentity])
   return (
     <>
       <header className="App-header">

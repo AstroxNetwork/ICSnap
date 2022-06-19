@@ -1,28 +1,49 @@
-import { fromHex, PublicKey, Signature, SignIdentity, toHex } from '@dfinity/agent';
-import { DER_COSE_OID, Secp256k1PublicKey, WebAuthnIdentity } from '@dfinity/identity';
-import { MetamaskICPSnap } from './snap';
+import { ICPSnapApi, SignRawMessageResponse } from '@astrox/icsnap-types';
+import { PublicKey, Signature, SignIdentity } from '@dfinity/agent';
+import { fromHexString, toHexString } from './util';
+import { Secp256k1PublicKey } from '@dfinity/identity';
+import { Principal } from '@dfinity/principal';
 
 export class SnapIdentity extends SignIdentity {
-  constructor(private _snap: MetamaskICPSnap, private _rawPublickeyString: string) {
+  constructor(private _api: ICPSnapApi, private _rawPublickeyString: string, private _principalString: string) {
     super();
   }
 
   getPublicKey(): PublicKey {
-    return Secp256k1PublicKey.fromRaw(fromHex(this._rawPublickeyString));
+    return Secp256k1PublicKey.fromRaw(fromHexString(this._rawPublickeyString));
   }
+
+  getPrincipal(): Principal {
+    return Principal.fromText(this._principalString);
+  }
+
   async sign(blob: ArrayBuffer): Promise<Signature> {
-    const api = await this._snap.getICPSnapApi();
-    const blobString = toHex(blob);
+    const blobString = toHexString(blob);
 
     try {
-      const signedResponse = await api.signRawMessage(blobString);
+      const signedResponse = await this._api.signRawMessage(blobString);
       if (signedResponse.error) {
         throw signedResponse.error;
       }
       if (signedResponse.confirmed === false) {
         throw new Error(`signing message error: signing process terminated by user`);
       }
-      return fromHex(signedResponse.signature) as Signature;
+      return fromHexString(signedResponse.signature) as Signature;
+    } catch (error) {
+      throw new Error(`signing message error: ${error.message}`);
+    }
+  }
+
+  async signRawMessage(blob: string): Promise<SignRawMessageResponse> {
+    try {
+      const signedResponse = await this._api.signRawMessage(blob);
+      if (signedResponse.error) {
+        throw signedResponse.error;
+      }
+      if (signedResponse.confirmed === false) {
+        throw new Error(`signing message error: signing process terminated by user`);
+      }
+      return signedResponse;
     } catch (error) {
       throw new Error(`signing message error: ${error.message}`);
     }

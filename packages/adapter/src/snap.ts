@@ -1,11 +1,19 @@
 import { ICPSnapApi, SnapConfig } from '@astrox/icsnap-types';
 import { hasMetaMask, isMetamaskSnapsSupported, isSnapInstalled } from './util';
 import { configure, getIdentity, getPrincipal, getRawPublicKey, sign, signRawMessage } from './methods';
+import { SnapIdentity } from './identity';
 
 export class MetamaskICPSnap {
   // snap parameters
   protected readonly snapOrigin: string;
   protected readonly snapId: string;
+
+  public async createSnapIdentity(): Promise<SnapIdentity> {
+    const api = await this.getICPSnapApi();
+    const publicKey = await api.getRawPublicKey();
+    const principal = await api.getPrincipal();
+    return new SnapIdentity(api, publicKey, principal);
+  }
 
   public constructor(snapOrigin: string) {
     this.snapOrigin = snapOrigin;

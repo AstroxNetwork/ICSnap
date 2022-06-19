@@ -3,7 +3,10 @@
   "version": "0.0.2",
   "private": false,
   "main": "build/index.js",
-  "files": ["dist", "snap.manifest.json"],
+  "files": [
+    "dist",
+    "snap.manifest.json"
+  ],
   "author": "AstroX <dev@astrox.network>",
   "license": "(Apache-2.0 AND MIT)",
   "homepage": "https://github.com/AstroxNetwork",
@@ -35,8 +38,9 @@
   },
   "dependencies": {
     "@astrox/icsnap-types": "^0.0.1",
-    "@dfinity/identity": "^0.11.0",
-    "@dfinity/candid": "^0.11.0",
+    "@dfinity/agent": "0.11.3",
+    "@dfinity/identity": "^0.11.3",
+    "@dfinity/candid": "^0.11.3",
     "@metamask/key-tree": "^3.0.1",
     "@metamask/snaps-cli": "^0.10.7",
     "@types/deepmerge": "^2.2.0",

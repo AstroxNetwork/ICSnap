@@ -1,7 +1,7 @@
 import { Wallet } from '@astrox/icsnap-types';
-import { toHexString } from '@dfinity/candid';
 import { Secp256k1KeyIdentity } from '@dfinity/identity';
 import { getIdentity } from './getIdentity';
+import { toHexString } from './util';
 
 export async function getRawPublicKey(wallet: Wallet): Promise<string> {
   const identityString = await getIdentity(wallet);
