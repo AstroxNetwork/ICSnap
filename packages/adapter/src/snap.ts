@@ -1,6 +1,6 @@
 import { ICPSnapApi, SnapConfig } from '@astrox/icsnap-types';
 import { hasMetaMask, isMetamaskSnapsSupported, isSnapInstalled } from './util';
-import { configure, getIdentity, getPrincipal, sign, signRawMessage } from './methods';
+import { configure, getIdentity, getPrincipal, getRawPublicKey, sign, signRawMessage } from './methods';
 
 export class MetamaskICPSnap {
   // snap parameters
@@ -19,6 +19,7 @@ export class MetamaskICPSnap {
       sign: sign.bind(this),
       signRawMessage: signRawMessage.bind(this),
       getPrincipal: getPrincipal.bind(this),
+      getRawPublicKey: getRawPublicKey.bind(this),
     };
   };
 }

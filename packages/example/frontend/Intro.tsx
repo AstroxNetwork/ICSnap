@@ -5,6 +5,7 @@ import { initiateICPSnap } from "./services/metamask"
 import { MetamaskICPSnap } from "@astrox/icsnap-adapter"
 import { ICPSnapApi, SignRawMessageResponse } from "@astrox/icsnap-types"
 import { Signature } from "@dfinity/agent"
+import { Secp256k1KeyIdentity } from "@dfinity/identity"
 
 export function Intro() {
   const [principal, setPrincipal] = useState<string | undefined>(undefined)

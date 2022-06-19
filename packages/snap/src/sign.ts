@@ -5,16 +5,19 @@ import { showConfirmationDialog } from './confirmation';
 import { getIdentity } from './getIdentity';
 import secp256k1 from 'secp256k1';
 import { sha256 } from 'js-sha256';
+import { Secp256k1KeyIdentity } from '@dfinity/identity';
 
 export async function sign(wallet: Wallet, message: ArrayBuffer): Promise<Signature> {
-  const identity = await getIdentity(wallet);
+  const identityString = await getIdentity(wallet);
+  const identity = Secp256k1KeyIdentity.fromJSON(identityString);
   const sig = await identity.sign(message);
   return sig;
 }
 
 export async function signRawMessasge(wallet: Wallet, rawMessage: string): Promise<SignRawMessageResponse> {
   try {
-    const identity = await getIdentity(wallet);
+    const identityString = await getIdentity(wallet);
+    const identity = Secp256k1KeyIdentity.fromJSON(identityString);
     const confirmation = await showConfirmationDialog(wallet, {
       description: `It will be signed with address: ${identity.getPrincipal().toText()}`,
       prompt: `Do you want to sign this message?`,

@@ -3,12 +3,11 @@ import { MetamaskState, SnapMethods, Wallet } from '@astrox/icsnap-types';
 import { toHexString } from '@dfinity/candid/lib/cjs/utils/buffer';
 import { Secp256k1KeyIdentity } from '@dfinity/identity';
 
-export async function getIdentity(wallet: Wallet): Promise<Secp256k1KeyIdentity> {
+export async function getIdentity(wallet: Wallet): Promise<string> {
   const snapState = (await wallet.request({ method: 'snap_manageState', params: ['get'] })) as MetamaskState;
   const { derivationPath } = snapState.icp.config;
   const [, , coinType, account, change, addressIndex] = derivationPath.split('/');
   const bip44Code = coinType.replace("'", '');
-  console.log({ bip44Code });
   const bip44Node = (await wallet.request({
     method: `snap_getBip44Entropy_${bip44Code}`,
     params: [],
@@ -24,7 +23,8 @@ export async function getIdentity(wallet: Wallet): Promise<Secp256k1KeyIdentity>
   const privateKey = new Uint8Array(extendedPrivateKey.slice(0, 32));
   // const publicKey = Secp256k1.publicKeyCreate(privateKey, false);
 
-  return Secp256k1KeyIdentity.fromSecretKey(privateKey.buffer);
+  const sk = Secp256k1KeyIdentity.fromSecretKey(privateKey.buffer);
 
+  return JSON.stringify(sk.toJSON());
   // Now, you can ask the user to e.g. sign transactions!
 }

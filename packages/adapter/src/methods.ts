@@ -28,3 +28,7 @@ export async function signRawMessage(this: MetamaskICPSnap, rawMessage: string):
 export async function getPrincipal(this: MetamaskICPSnap): Promise<string> {
   return await sendSnapMethod({ method: 'icp_getPrincipal' }, this.snapId);
 }
+
+export async function getRawPublicKey(this: MetamaskICPSnap): Promise<string> {
+  return await sendSnapMethod({ method: 'icp_getRawPublicKey' }, this.snapId);
+}

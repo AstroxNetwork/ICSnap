@@ -37,7 +37,8 @@ export interface SnapRpcMethodRequest {
 export type MetamaskRpcRequest = WalletEnableRequest | GetSnapsRequest | SnapRpcMethodRequest;
 
 export interface ICPSnapApi {
-  getIdentity(): Promise<Secp256k1KeyIdentity>;
+  getIdentity(): Promise<string>;
+  getRawPublicKey(): Promise<string>;
   configure(configuration: Partial<SnapConfig>): Promise<void>;
   sign(message: ArrayBuffer): Promise<Signature>;
   signRawMessage(message: string): Promise<SignRawMessageResponse>;

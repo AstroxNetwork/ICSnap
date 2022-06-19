@@ -2,6 +2,7 @@ import { MetamaskState, Wallet } from '@astrox/icsnap-types';
 import { configure, defaultConfiguration } from './config';
 import { getIdentity } from './getIdentity';
 import { getPrincipal } from './getPrincipal';
+import { getRawPublicKey } from './getPublicKey';
 import { sign, signRawMessasge } from './sign';
 
 declare let wallet: Wallet;
@@ -32,6 +33,8 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
       return await getIdentity(wallet);
     case 'icp_getPrincipal':
       return await getPrincipal(wallet);
+    case 'icp_getRawPublicKey':
+      return await getRawPublicKey(wallet);
     case 'icp_sign':
       return await sign(wallet, requestObject.params.message);
     case 'icp_signRawMessage':
