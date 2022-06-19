@@ -1,6 +1,6 @@
 {
   "name": "@astrox/icsnap",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": false,
   "main": "build/index.js",
   "files": [
@@ -37,10 +37,10 @@
     "prepublish": "yarn run build"
   },
   "dependencies": {
-    "@astrox/icsnap-types": "^0.0.1",
+    "@astrox/icsnap-types": "^0.0.3",
     "@dfinity/agent": "0.11.3",
-    "@dfinity/identity": "^0.11.3",
     "@dfinity/candid": "^0.11.3",
+    "@dfinity/identity": "^0.11.3",
     "@metamask/key-tree": "^3.0.1",
     "@metamask/snaps-cli": "^0.10.7",
     "@types/deepmerge": "^2.2.0",
