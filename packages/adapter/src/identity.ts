@@ -5,6 +5,7 @@ import { Secp256k1KeyIdentity, Secp256k1PublicKey } from '@dfinity/identity';
 import { Principal } from '@dfinity/principal';
 
 export class SnapIdentity extends SignIdentity {
+  #innerIdentity: Secp256k1KeyIdentity;
   constructor(private _api: ICPSnapApi, private _rawPublickeyString: string, private _principalString: string) {
     super();
   }
@@ -29,8 +30,9 @@ export class SnapIdentity extends SignIdentity {
       // }
       // return fromHexString(signedResponse.signature) as Signature;
 
-      const _innerIdentity = Secp256k1KeyIdentity.fromJSON(await this._api.getIdentity());
-      const sig = await _innerIdentity.sign(blob);
+      this.#innerIdentity = this.#innerIdentity ?? Secp256k1KeyIdentity.fromJSON(await this._api.getIdentity());
+
+      const sig = await this.#innerIdentity.sign(blob);
       return sig;
     } catch (error) {
       throw new Error(`signing message error: ${error.message}`);
