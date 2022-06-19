@@ -1,7 +1,7 @@
 import { Signature } from '@dfinity/agent';
 import { Secp256k1KeyIdentity } from '@dfinity/identity';
 import { MetamaskICPRpcRequest } from './methods';
-import { SignRawMessageResponse } from './wallet';
+import { SignMessageResponse, SignRawMessageResponse } from './wallet';
 
 export type ICPNetwork = 'mainnet' | 'local';
 export interface UnitConfiguration {
@@ -40,7 +40,7 @@ export interface ICPSnapApi {
   getIdentity(): Promise<string>;
   getRawPublicKey(): Promise<string>;
   configure(configuration: Partial<SnapConfig>): Promise<void>;
-  sign(message: ArrayBuffer): Promise<Signature>;
+  sign(message: string): Promise<SignMessageResponse>;
   signRawMessage(message: string): Promise<SignRawMessageResponse>;
   getPrincipal(): Promise<string>;
 }

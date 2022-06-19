@@ -1,4 +1,4 @@
-import { ICPSnapApi, SignRawMessageResponse } from '@astrox/icsnap-types';
+import { ICPSnapApi, SignRawMessageResponse, SignMessageResponse } from '@astrox/icsnap-types';
 import { PublicKey, Signature, SignIdentity } from '@dfinity/agent';
 import { fromHexString, toHexString } from './util';
 import { Secp256k1PublicKey } from '@dfinity/identity';
@@ -10,6 +10,7 @@ export class SnapIdentity extends SignIdentity {
   }
 
   getPublicKey(): PublicKey {
+    console.log('from api: ' + this._rawPublickeyString);
     return Secp256k1PublicKey.fromRaw(fromHexString(this._rawPublickeyString));
   }
 
@@ -18,10 +19,8 @@ export class SnapIdentity extends SignIdentity {
   }
 
   async sign(blob: ArrayBuffer): Promise<Signature> {
-    const blobString = toHexString(blob);
-
     try {
-      const signedResponse = await this._api.signRawMessage(blobString);
+      const signedResponse = await this._api.sign(toHexString(blob));
       if (signedResponse.error) {
         throw signedResponse.error;
       }

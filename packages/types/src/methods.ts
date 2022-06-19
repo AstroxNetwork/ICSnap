@@ -38,7 +38,7 @@ export interface ConfigureRequest {
 export interface SignRequest {
   method: 'icp_sign';
   params: {
-    message: ArrayBuffer;
+    message: string;
   };
 }
 export interface SignRawMessageRequest {

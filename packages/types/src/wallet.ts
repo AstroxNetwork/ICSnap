@@ -12,6 +12,13 @@ export interface SignRawMessageResponse {
   confirmed: boolean;
   error: Error;
 }
+
+export interface SignMessageResponse {
+  signature: string;
+  confirmed: boolean;
+  error: Error;
+}
+
 export interface WalletEnableParam {
   wallet_snap: {
     [snapId: string]: {

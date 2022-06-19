@@ -1,4 +1,4 @@
-import { MetamaskICPRpcRequest, SignRawMessageResponse, SnapConfig } from '@astrox/icsnap-types';
+import { MetamaskICPRpcRequest, SignRawMessageResponse, SignMessageResponse, SnapConfig } from '@astrox/icsnap-types';
 import { MetamaskICPSnap } from './snap';
 import { Signature } from '@dfinity/agent';
 
@@ -17,7 +17,7 @@ export async function configure(this: MetamaskICPSnap, configuration: SnapConfig
   return await sendSnapMethod({ method: 'icp_configure', params: { configuration: configuration } }, this.snapId);
 }
 
-export async function sign(this: MetamaskICPSnap, message: ArrayBuffer): Promise<Signature> {
+export async function sign(this: MetamaskICPSnap, message: string): Promise<SignMessageResponse> {
   return await sendSnapMethod({ method: 'icp_sign', params: { message: message } }, this.snapId);
 }
 

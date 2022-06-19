@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from "react"
-import { counter } from "canisters/counter"
 import logo from "./assets/logo-dark.svg"
 import { initiateICPSnap } from "./services/metamask"
 import { SnapIdentity } from "@astrox/icsnap-adapter"
@@ -28,8 +27,9 @@ export function Intro() {
     }
   }, [])
 
-  const getPrincipal = () => {
+  const getPrincipal = async () => {
     console.log(snapIdentity?.getPrincipal()!.toText())
+    console.log(snapIdentity?.getPublicKey())
     setPrincipal(snapIdentity?.getPrincipal()!.toText())
   }
 
