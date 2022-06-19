@@ -4,7 +4,9 @@
   "author": "AstroX <dev@astrox.network>",
   "license": "(Apache-2.0 AND MIT)",
   "workspaces": [
-    "packages/*"
+    "packages/adapter",
+    "packages/snap",
+    "packages/exmaple"
   ],
   "scripts": {
     "build:snap": "lerna run build --scope @astrox/icsnap",
