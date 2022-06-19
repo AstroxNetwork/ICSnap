@@ -25,5 +25,6 @@
   },
   "dependencies": {
     "@dfinity/identity": "^0.11.3"
-  }
+  },
+  "gitHead": "d9ac0fd3388bab84a84c1ad323c2e54ce2ab1711"
 }
