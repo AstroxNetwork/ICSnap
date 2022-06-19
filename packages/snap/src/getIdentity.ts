@@ -1,5 +1,5 @@
 import { deriveBIP44AddressKey, JsonBIP44CoinTypeNode } from '@metamask/key-tree';
-import { MetamaskState, SnapMethods, Wallet } from '@astrox/icsnap-types';
+import { MetamaskState, Wallet } from '@astrox/icsnap-types';
 import { toHexString } from '@dfinity/candid/lib/cjs/utils/buffer';
 import { Secp256k1KeyIdentity } from '@dfinity/identity';
 
