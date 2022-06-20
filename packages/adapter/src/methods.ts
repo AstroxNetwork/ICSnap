@@ -9,8 +9,20 @@ async function sendSnapMethod<T>(request: MetamaskICPRpcRequest, snapId: string)
   });
 }
 
-export async function getIdentity(this: MetamaskICPSnap): Promise<string> {
-  return await sendSnapMethod({ method: 'icp_getIdentity' }, this.snapId);
+// export async function getIdentity(this: MetamaskICPSnap): Promise<string> {
+//   return await sendSnapMethod({ method: 'icp_getIdentity' }, this.snapId);
+// }
+
+export async function requestDelegationChain(
+  this: MetamaskICPSnap,
+  sessionPublicKey: string,
+  milliseconds?: number,
+  canisterIds?: string,
+): Promise<string> {
+  return await sendSnapMethod(
+    { method: 'icp_requestDelegationChain', params: { sessionPublicKey: sessionPublicKey, milliseconds: milliseconds, canisterIds: canisterIds } },
+    this.snapId,
+  );
 }
 
 export async function configure(this: MetamaskICPSnap, configuration: SnapConfig): Promise<void> {

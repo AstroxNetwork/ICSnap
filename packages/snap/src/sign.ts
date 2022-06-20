@@ -46,23 +46,3 @@ export async function signRawMessasge(wallet: Wallet, rawMessage: string): Promi
     return { confirmed: false, error: e.message.toString(), signature: undefined };
   }
 }
-
-// function ab2str(buf: ArrayBuffer): string {
-//   return String.fromCharCode.apply(null, new Uint16Array(buf));
-// }
-
-// function str2ab(str: string): ArrayBuffer {
-//   var buf = new ArrayBuffer(str.length * 2); // 2 bytes for each char
-//   var bufView = new Uint16Array(buf);
-//   for (var i = 0, strLen = str.length; i < strLen; i++) {
-//     bufView[i] = str.charCodeAt(i);
-//   }
-//   return buf;
-// }
-
-// function ecSign(prv: ArrayBuffer, challenge: ArrayBuffer): Signature {
-//   const hash = sha256.create();
-//   hash.update(challenge);
-//   const signature = secp256k1.ecdsaSign(new Uint8Array(hash.digest()), new Uint8Array(prv)).signature.buffer;
-//   return signature as Signature;
-// }

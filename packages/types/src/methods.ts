@@ -24,9 +24,9 @@ export type MetamaskState = {
 };
 
 // icp methods
-export interface GetIdentityRequest {
-  method: 'icp_getIdentity';
-}
+// export interface GetIdentityRequest {
+//   method: 'icp_getIdentity';
+// }
 
 export interface ConfigureRequest {
   method: 'icp_configure';
@@ -48,6 +48,15 @@ export interface SignRawMessageRequest {
   };
 }
 
+export interface DelegationChainRequest {
+  method: 'icp_requestDelegationChain';
+  params: {
+    sessionPublicKey: string;
+    milliseconds?: number;
+    canisterIds?: string;
+  };
+}
+
 export interface GetRawPublicKey {
   method: 'icp_getRawPublicKey';
 }
@@ -56,6 +65,13 @@ export interface GetPrincipal {
   method: 'icp_getPrincipal';
 }
 
-export type MetamaskICPRpcRequest = ConfigureRequest | GetIdentityRequest | SignRequest | SignRawMessageRequest | GetPrincipal | GetRawPublicKey;
+export type MetamaskICPRpcRequest =
+  | ConfigureRequest
+  // | GetIdentityRequest
+  | SignRequest
+  | SignRawMessageRequest
+  | GetPrincipal
+  | GetRawPublicKey
+  | DelegationChainRequest;
 
 type Method = MetamaskICPRpcRequest['method'];

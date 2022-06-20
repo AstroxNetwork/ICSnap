@@ -3,6 +3,7 @@ import { configure, defaultConfiguration } from './config';
 import { getIdentity } from './getIdentity';
 import { getPrincipal } from './getPrincipal';
 import { getRawPublicKey } from './getPublicKey';
+import { requestDelegationChain } from './requestDelegationChain';
 import { sign, signRawMessasge } from './sign';
 
 declare let wallet: Wallet;
@@ -29,8 +30,15 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
     case 'icp_configure':
       const resp = await configure(wallet, requestObject.params.configuration.network, requestObject.params.configuration);
       return resp.snapConfig;
-    case 'icp_getIdentity':
-      return await getIdentity(wallet);
+    case 'icp_requestDelegationChain':
+      return await requestDelegationChain(
+        wallet,
+        requestObject.params.sessionPublicKey,
+        requestObject.params.milliseconds,
+        requestObject.params.canisterIds,
+      );
+    // case 'icp_getIdentity':
+    //   return await getIdentity(wallet);
     case 'icp_getPrincipal':
       return await getPrincipal(wallet);
     case 'icp_getRawPublicKey':

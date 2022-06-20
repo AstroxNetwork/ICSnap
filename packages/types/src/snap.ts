@@ -37,10 +37,11 @@ export interface SnapRpcMethodRequest {
 export type MetamaskRpcRequest = WalletEnableRequest | GetSnapsRequest | SnapRpcMethodRequest;
 
 export interface ICPSnapApi {
-  getIdentity(): Promise<string>;
+  // getIdentity(): Promise<string>;
   getRawPublicKey(): Promise<string>;
   configure(configuration: Partial<SnapConfig>): Promise<void>;
   sign(message: string): Promise<SignMessageResponse>;
   signRawMessage(message: string): Promise<SignRawMessageResponse>;
   getPrincipal(): Promise<string>;
+  requestDelegationChain(sessionPublicKey: string, milliseconds?: number, canisterIds?: string): Promise<string>;
 }

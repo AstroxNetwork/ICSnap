@@ -1,19 +1,13 @@
 import { ICPSnapApi, SnapConfig } from '@astrox/icsnap-types';
-import { hasMetaMask, isMetamaskSnapsSupported, isSnapInstalled } from './util';
-import { configure, getIdentity, getPrincipal, getRawPublicKey, sign, signRawMessage } from './methods';
+import { hasMetaMask, isMetamaskSnapsSupported, isSnapInstalled, toHexString } from './util';
+import { configure, getPrincipal, getRawPublicKey, requestDelegationChain, sign, signRawMessage } from './methods';
 import { SnapIdentity } from './identity';
+import { Secp256k1PublicKey } from '@dfinity/identity';
 
 export class MetamaskICPSnap {
   // snap parameters
   protected readonly snapOrigin: string;
   protected readonly snapId: string;
-
-  public async createSnapIdentity(): Promise<SnapIdentity> {
-    const api = await this.getICPSnapApi();
-    const publicKey = await api.getRawPublicKey();
-    const principal = await api.getPrincipal();
-    return new SnapIdentity(api, publicKey, principal);
-  }
 
   public constructor(snapOrigin: string) {
     this.snapOrigin = snapOrigin;
@@ -23,7 +17,7 @@ export class MetamaskICPSnap {
   public getICPSnapApi = async (): Promise<ICPSnapApi> => {
     return {
       configure: configure.bind(this),
-      getIdentity: getIdentity.bind(this),
+      requestDelegationChain: requestDelegationChain.bind(this),
       sign: sign.bind(this),
       signRawMessage: signRawMessage.bind(this),
       getPrincipal: getPrincipal.bind(this),
@@ -33,6 +27,11 @@ export class MetamaskICPSnap {
 }
 
 export type SnapInstallationParamNames = 'version' | string;
+
+export interface EnableICPSnapResult {
+  snap: MetamaskICPSnap;
+  delegationChainString: string;
+}
 
 const defaultSnapOrigin = 'https://bafybeigzphbumdkucnj2c6nr5xb3kwsq5gs2gp7w3qldgbvfeycfsbjylu.ipfs.infura-ipfs.io';
 /**
@@ -48,11 +47,17 @@ const defaultSnapOrigin = 'https://bafybeigzphbumdkucnj2c6nr5xb3kwsq5gs2gp7w3qld
  *
  * @return MetamaskICPSnap - adapter object that exposes snap API
  */
-export async function enableICPSnap(
-  config: Partial<SnapConfig>,
-  snapOrigin?: string,
-  snapInstallationParams: Record<SnapInstallationParamNames, unknown> = {},
-): Promise<MetamaskICPSnap> {
+export async function enableICPSnap({
+  config,
+  snapOrigin,
+  snapInstallationParams = {},
+  sessionPublicKey,
+}: {
+  config: Partial<SnapConfig>;
+  snapOrigin?: string;
+  snapInstallationParams: Record<SnapInstallationParamNames, unknown>;
+  sessionPublicKey: Secp256k1PublicKey;
+}): Promise<EnableICPSnapResult> {
   const snapId = snapOrigin ?? defaultSnapOrigin;
 
   // check all conditions
@@ -87,7 +92,8 @@ export async function enableICPSnap(
   // create snap describer
   const snap = new MetamaskICPSnap(snapOrigin || defaultSnapOrigin);
   // set initial configuration
-  await (await snap.getICPSnapApi()).configure(config);
-  // return snap object
-  return snap;
+  const api = await snap.getICPSnapApi();
+  await api.configure(config);
+  const delegationChainString = await api.requestDelegationChain(toHexString(sessionPublicKey.toDer()));
+  return { snap, delegationChainString };
 }

@@ -23,13 +23,11 @@ export function Intro() {
       setInstalled(false)
     } else {
       setInstalled(true)
-      setSnapIdentity(await installResult.snap?.createSnapIdentity())
+      setSnapIdentity(installResult.identity!)
     }
   }, [])
 
   const getPrincipal = async () => {
-    console.log(snapIdentity?.getPrincipal()!.toText())
-    console.log(snapIdentity?.getPublicKey())
     setPrincipal(snapIdentity?.getPrincipal()!.toText())
   }
 
