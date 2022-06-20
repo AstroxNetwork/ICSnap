@@ -1,8 +1,9 @@
-import React, { useCallback, useEffect, useState } from "react"
+import React, { createFactory, useCallback, useEffect, useState } from "react"
 import logo from "./assets/logo-dark.svg"
 import { initiateICPSnap } from "./services/metamask"
 import { SnapIdentity } from "@astrox/icsnap-adapter"
 import { SignRawMessageResponse } from "@astrox/icsnap-types"
+// import { canisterId, createActor } from "./services"
 
 export function Intro() {
   const [principal, setPrincipal] = useState<string | undefined>(undefined)
@@ -28,8 +29,6 @@ export function Intro() {
   }, [])
 
   const getPrincipal = async () => {
-    console.log(snapIdentity?.getPrincipal()!.toText())
-    console.log(snapIdentity?.getPublicKey())
     setPrincipal(snapIdentity?.getPrincipal()!.toText())
   }
 

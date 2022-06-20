@@ -11,18 +11,10 @@ export async function sign(wallet: Wallet, message: string): Promise<SignMessage
   try {
     const identityString = await getIdentity(wallet);
     const identity = Secp256k1KeyIdentity.fromJSON(identityString);
-    const confirmation = await showConfirmationDialog(wallet, {
-      description: `It will be signed with address: ${identity.getPrincipal().toText()}`,
-      prompt: `Do you want to sign this message?`,
-      textAreaContent: message,
-    });
-    let signature: ArrayBuffer | undefined = undefined;
-    if (confirmation) {
-      signature = await identity.sign(fromHexString(message));
-    }
-    return { confirmed: confirmation, error: null, signature: toHexString(signature) };
+    let signature = await identity.sign(fromHexString(message));
+    return { error: null, signature: toHexString(signature) };
   } catch (e) {
-    return { confirmed: false, error: e.message.toString(), signature: undefined };
+    return { error: e.message.toString(), signature: undefined };
   }
 }
 

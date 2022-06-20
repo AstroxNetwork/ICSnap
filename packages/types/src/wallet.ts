@@ -15,7 +15,7 @@ export interface SignRawMessageResponse {
 
 export interface SignMessageResponse {
   signature: string;
-  confirmed: boolean;
+  // confirmed: boolean;
   error: Error;
 }
 

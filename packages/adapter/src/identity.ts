@@ -1,11 +1,11 @@
 import { ICPSnapApi, SignRawMessageResponse, SignMessageResponse } from '@astrox/icsnap-types';
 import { PublicKey, Signature, SignIdentity } from '@dfinity/agent';
 import { fromHexString, toHexString } from './util';
-import { Secp256k1KeyIdentity, Secp256k1PublicKey } from '@dfinity/identity';
+import { DelegationChain, DelegationIdentity, Ed25519KeyIdentity, Secp256k1KeyIdentity, Secp256k1PublicKey } from '@dfinity/identity';
 import { Principal } from '@dfinity/principal';
 
 export class SnapIdentity extends SignIdentity {
-  #innerIdentity: Secp256k1KeyIdentity;
+  #innerIdentity: SignIdentity;
   constructor(private _api: ICPSnapApi, private _rawPublickeyString: string, private _principalString: string) {
     super();
   }
@@ -21,19 +21,17 @@ export class SnapIdentity extends SignIdentity {
     try {
       // console.log(toHexString(blob));
 
-      // const signedResponse = await this._api.sign(toHexString(blob));
-      // if (signedResponse.error) {
-      //   throw signedResponse.error;
-      // }
-      // if (signedResponse.confirmed === false) {
-      //   throw new Error(`signing message error: signing process terminated by user`);
-      // }
-      // return fromHexString(signedResponse.signature) as Signature;
+      const signedResponse = await this._api.sign(toHexString(blob));
+      if (signedResponse.error) {
+        throw signedResponse.error;
+      }
 
-      this.#innerIdentity = this.#innerIdentity ?? Secp256k1KeyIdentity.fromJSON(await this._api.getIdentity());
+      return fromHexString(signedResponse.signature) as Signature;
 
-      const sig = await this.#innerIdentity.sign(blob);
-      return sig;
+      // this.#innerIdentity = this.#innerIdentity ?? Secp256k1KeyIdentity.fromJSON(await this._api.getIdentity());
+      // this.#innerIdentity = this.#innerIdentity ?? Secp256k1KeyIdentity.fromJSON(await this._api.getIdentity());
+      // const sig = await this.#innerIdentity.sign(blob);
+      // return sig;
     } catch (error) {
       throw new Error(`signing message error: ${error.message}`);
     }
@@ -54,3 +52,15 @@ export class SnapIdentity extends SignIdentity {
     }
   }
 }
+
+export const requestDelegation = async (
+  identity: SignIdentity,
+  { canisterId, date }: { canisterId?: string; date?: Date },
+): Promise<DelegationIdentity> => {
+  const sessionKey = Secp256k1KeyIdentity.generate();
+  const chain = await DelegationChain.create(identity, sessionKey.getPublicKey(), date || new Date(Date.parse('2100-01-01')), {
+    targets: canisterId != undefined ? [Principal.fromText(canisterId)] : undefined,
+  });
+
+  return DelegationIdentity.fromDelegation(sessionKey, chain);
+};
