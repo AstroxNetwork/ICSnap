@@ -5,13 +5,14 @@ import { DelegationChain, DelegationIdentity, Secp256k1KeyIdentity, Secp256k1Pub
 import { Principal } from '@dfinity/principal';
 
 export class SnapIdentity extends SignIdentity {
-  #innerIdentity: DelegationIdentity;
+  #innerIdentity: SignIdentity;
   constructor(private _api: ICPSnapApi, private _delegationChain: string, private _sessionKey: Secp256k1KeyIdentity) {
     super();
-    this.#innerIdentity = DelegationIdentity.fromDelegation(this._sessionKey, DelegationChain.fromJSON(JSON.parse(this._delegationChain)));
+    this.#innerIdentity = DelegationIdentity.fromDelegation(this._sessionKey, DelegationChain.fromJSON(this._delegationChain));
   }
   getPublicKey(): PublicKey {
-    return this.#innerIdentity.getPublicKey();
+    // return this.#innerIdentity.getPublicKey();
+    return this._sessionKey.getPublicKey();
   }
 
   getPrincipal(): Principal {

@@ -35,6 +35,8 @@ export async function requestDelegationChain(wallet: Wallet, sessionPublicKey: s
     chain = await DelegationChain.create(identity, Secp256k1PublicKey.fromDer(fromHexString(sessionPublicKey) as DerEncodedPublicKey), dateTime, {
       targets,
     });
+    return JSON.stringify(chain.toJSON());
+  } else {
+    throw new Error('Get Delegation Chain error');
   }
-  return JSON.stringify(chain.toJSON());
 }
