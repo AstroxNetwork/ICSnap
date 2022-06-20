@@ -1,6 +1,6 @@
 {
   "name": "@astrox/icsnap-types",
-  "version": "0.0.9",
+  "version": "0.0.12",
   "main": "build/index.js",
   "module": "build/index.js",
   "types": "build/index.d.ts",
