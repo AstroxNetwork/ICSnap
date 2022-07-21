@@ -1,9 +1,9 @@
 {
-  "version": "0.0.9",
+  "version": "0.0.12",
   "proposedName": "ICSnap",
   "description": "The ICP snap.",
   "source": {
-    "shasum": "7gKyNBBBYRQIN/dn58yB8sVQihxcAyGHd4VG4vR+tFM=",
+    "shasum": "UYNvKgbausXYEJpRusJBELMTK8HkkH68gfct0Nw8Jos=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",

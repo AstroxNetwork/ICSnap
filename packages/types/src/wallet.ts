@@ -1,6 +1,6 @@
 import { MetamaskICPRpcRequest } from './methods';
 
-export type FMethodCallback = (originString: string, requestObject: MetamaskICPRpcRequest) => Promise<unknown>;
+export type FMethodCallback = ({ origin, request }: { origin: string; request: MetamaskICPRpcRequest }) => Promise<unknown>;
 
 export interface Wallet {
   registerRpcMessageHandler: (fn: FMethodCallback) => unknown;
