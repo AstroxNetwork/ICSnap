@@ -4,7 +4,7 @@ export type FMethodCallback = ({ origin, request }: { origin: string; request: M
 
 export interface Wallet {
   registerRpcMessageHandler: (fn: FMethodCallback) => unknown;
-  request(options: { method: string; params?: unknown[] }): unknown;
+  request(options: { method: string; params?: any }): unknown;
 }
 
 export interface SignRawMessageResponse {

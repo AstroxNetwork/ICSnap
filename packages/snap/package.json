@@ -41,7 +41,7 @@
     "@dfinity/agent": "0.11.3",
     "@dfinity/candid": "^0.11.3",
     "@dfinity/identity": "^0.11.3",
-    "@metamask/key-tree": "^4.0.0",
+    "@metamask/key-tree": "^6.0.0",
     "@metamask/key-tree-old": "npm:@metamask/key-tree@^3.0.1",
     "@metamask/snaps-cli": "^0.18.1",
     "@types/deepmerge": "^2.2.0",

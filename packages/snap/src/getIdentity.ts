@@ -13,10 +13,20 @@ export async function getIdentity(wallet: Wallet): Promise<string> {
   const { derivationPath } = snapState.icp.config;
   const [, , coinType, account, change, addressIndex] = derivationPath.split('/');
   const bip44Code = coinType.replace("'", '');
-  const bip44Node = (await wallet.request({
-    method: `snap_getBip44Entropy_${bip44Code}`,
-    params: [],
-  })) as Deprecated_JsonBIP44CoinTypeNode | JsonBIP44CoinTypeNode;
+  let bip44Node: JsonBIP44CoinTypeNode;
+  const currentVersion = await getMetamaskVersion(wallet);
+  if (isNewerVersion('MetaMask/v10.22.0-flask.0', currentVersion))
+    bip44Node = (await wallet.request({
+      method: 'snap_getBip44Entropy',
+      params: {
+        coinType: Number(bip44Code as string),
+      },
+    })) as JsonBIP44CoinTypeNode;
+  else
+    bip44Node = (await wallet.request({
+      method: `snap_getBip44Entropy_${bip44Code}`,
+      params: [],
+    })) as JsonBIP44CoinTypeNode;
 
   // Next, we'll create an address key deriver function for the Dogecoin coin_type node.
   // In this case, its path will be: m / 44' / coincode' / 0' / 0 / address_index
@@ -30,24 +40,13 @@ export async function getIdentity(wallet: Wallet): Promise<string> {
 
   let privateKey: Uint8Array;
 
-  const currentVersion = await getMetamaskVersion(wallet);
-  if (isNewerVersion('MetaMask/v10.15.99-flask.0', currentVersion)) {
-    const addressKeyDeriver = await getBIP44AddressKeyDeriver(bip44Node as JsonBIP44CoinTypeNode, {
-      account: parseInt(account),
-      change: parseInt(change),
-    });
-    const extendedPrivateKey = await addressKeyDeriver(Number(addressIndex));
-    privateKey = new Uint8Array(extendedPrivateKey.privateKeyBuffer.slice(0, 32));
-  } else {
-    // metamask has supplied us with entropy for "m/purpose'/bip44Code'/"
-    // we need to derive the final "accountIndex'/change/addressIndex"
-    const extendedPrivateKey = deprecated_deriveBIP44AddressKey(bip44Node as Deprecated_JsonBIP44CoinTypeNode, {
-      account: parseInt(account),
-      address_index: parseInt(addressIndex),
-      change: parseInt(change),
-    });
-    privateKey = new Uint8Array(extendedPrivateKey.slice(0, 32));
-  }
+  const addressKeyDeriver = await getBIP44AddressKeyDeriver(bip44Node as JsonBIP44CoinTypeNode, {
+    account: parseInt(account),
+    change: parseInt(change),
+  });
+  const extendedPrivateKey = await addressKeyDeriver(Number(addressIndex));
+
+  privateKey = new Uint8Array(extendedPrivateKey.privateKeyBytes.slice(0, 32));
 
   const sk = Secp256k1KeyIdentity.fromSecretKey(privateKey.buffer);
 

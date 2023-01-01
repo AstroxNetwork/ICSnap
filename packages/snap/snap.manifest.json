@@ -1,9 +1,9 @@
 {
-  "version": "0.0.12",
+  "version": "0.0.13",
   "proposedName": "ICSnap",
   "description": "The ICP snap.",
   "source": {
-    "shasum": "UYNvKgbausXYEJpRusJBELMTK8HkkH68gfct0Nw8Jos=",
+    "shasum": "4iHEALf7pHK0YGJq71YlzQ9VLPrRNECYCgWu5Ngg7Ao=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
@@ -15,7 +15,11 @@
   "initialPermissions": {
     "endowment:network-access": {},
     "snap_confirm": {},
-    "snap_getBip44Entropy_223": {},
+    "snap_getBip44Entropy": [
+      {
+        "coinType": 223
+      }
+    ],
     "snap_manageState": {}
   },
   "manifestVersion": "0.1"
