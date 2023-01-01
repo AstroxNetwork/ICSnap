@@ -4,7 +4,7 @@ import { showConfirmationDialog } from './confirmation';
 import { getIdentity } from './getIdentity';
 // import secp256k1 from 'secp256k1';
 // import { sha256 } from 'js-sha256';
-import { Secp256k1KeyIdentity } from '@dfinity/identity';
+import { Secp256k1KeyIdentity } from '@dfinity/identity-secp256k1';
 import { fromHexString, toHexString } from './util';
 
 export async function sign(wallet: Wallet, message: string): Promise<SignMessageResponse> {

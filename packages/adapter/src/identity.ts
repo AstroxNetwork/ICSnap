@@ -1,8 +1,9 @@
 import { ICPSnapApi, SignRawMessageResponse, SignMessageResponse } from '@astrox/icsnap-types';
 import { PublicKey, Signature, SignIdentity } from '@dfinity/agent';
 import { fromHexString, toHexString } from './util';
-import { DelegationChain, DelegationIdentity, Ed25519KeyIdentity, Secp256k1KeyIdentity, Secp256k1PublicKey } from '@dfinity/identity';
+import { DelegationChain, DelegationIdentity, Ed25519KeyIdentity } from '@dfinity/identity';
 import { Principal } from '@dfinity/principal';
+import { Secp256k1KeyIdentity, Secp256k1PublicKey } from '@dfinity/identity-secp256k1';
 
 export class SnapIdentity extends SignIdentity {
   #innerIdentity: SignIdentity;

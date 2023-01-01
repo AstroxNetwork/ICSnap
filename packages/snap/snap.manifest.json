@@ -1,9 +1,13 @@
 {
-  "version": "0.0.13",
+  "version": "0.0.14",
   "proposedName": "ICSnap",
   "description": "The ICP snap.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AstroxNetwork/ICSnap.git"
+  },
   "source": {
-    "shasum": "4iHEALf7pHK0YGJq71YlzQ9VLPrRNECYCgWu5Ngg7Ao=",
+    "shasum": "R5CmVrkhbhm1Flp0lNdbsr9Ui3qi2ihnKCdGlCl9ZvA=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",

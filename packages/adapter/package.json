@@ -25,9 +25,10 @@
   },
   "dependencies": {
     "@astrox/icsnap-types": "^0.0.14",
-    "@dfinity/agent": "^0.11.3",
-    "@dfinity/candid": "^0.11.3",
-    "@dfinity/identity": "^0.11.3"
+    "@dfinity/agent": "^0.15.1",
+    "@dfinity/candid": "^0.15.1",
+    "@dfinity/identity": "^0.15.1",
+    "@dfinity/identity-secp256k1": "^0.15.1"
   },
   "gitHead": "d9ac0fd3388bab84a84c1ad323c2e54ce2ab1711"
 }

@@ -5,7 +5,7 @@ import {
 import { getBIP44AddressKeyDeriver, JsonBIP44CoinTypeNode } from '@metamask/key-tree';
 import { MetamaskState, Wallet } from '@astrox/icsnap-types';
 import { toHexString } from '@dfinity/candid/lib/cjs/utils/buffer';
-import { Secp256k1KeyIdentity } from '@dfinity/identity';
+import { Secp256k1KeyIdentity } from '@dfinity/identity-secp256k1';
 import { getMetamaskVersion, isNewerVersion } from './util';
 
 export async function getIdentity(wallet: Wallet): Promise<string> {
