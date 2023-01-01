@@ -1,6 +1,6 @@
 {
   "name": "@astrox/icsnap",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "private": false,
   "main": "build/index.js",
   "files": [
@@ -41,7 +41,7 @@
     "prepublish": "yarn run build"
   },
   "dependencies": {
-    "@astrox/icsnap-types": "^0.0.14",
+    "@astrox/icsnap-types": "^0.0.15",
     "@dfinity/agent": "0.15.1",
     "@dfinity/candid": "^0.15.1",
     "@dfinity/identity": "^0.15.1",

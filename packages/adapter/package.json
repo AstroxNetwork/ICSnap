@@ -1,6 +1,6 @@
 {
   "name": "@astrox/icsnap-adapter",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "main": "build/index.js",
   "module": "build/index.js",
   "types": "build/index.d.ts",
@@ -24,7 +24,7 @@
     "test": "exit 0"
   },
   "dependencies": {
-    "@astrox/icsnap-types": "^0.0.14",
+    "@astrox/icsnap-types": "^0.0.15",
     "@dfinity/agent": "^0.15.1",
     "@dfinity/candid": "^0.15.1",
     "@dfinity/identity": "^0.15.1",
