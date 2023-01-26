@@ -1,6 +1,7 @@
 import { defineConfig } from "vite"
 import reactRefresh from "@vitejs/plugin-react-refresh"
 import path from "path"
+import shell from "shelljs"
 import dfxJson from "./dfx.json"
 import fs from "fs"
 
@@ -61,7 +62,7 @@ const canisterDefinitions = Object.entries(canisterIds as CanisterIds).reduce(
 )
 
 // Gets the port dfx is running on from dfx.json
-const DFX_PORT = dfxJson.networks.local.bind.split(":")[1]
+const DFX_PORT = shell.exec("dfx info webserver-port").replace("\n", "")
 
 // See guide on how to configure Vite at:
 // https://vitejs.dev/config/
@@ -80,7 +81,7 @@ export default defineConfig({
     proxy: {
       // This proxies all http requests made to /api to our running dfx instance
       "/api": {
-        target: `http://localhost:${DFX_PORT}`,
+        target: `http://127.0.0.1:${DFX_PORT}`,
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, "/api"),
       },

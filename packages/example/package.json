@@ -17,8 +17,10 @@
     "@dfinity/candid": "0.15.1",
     "@dfinity/identity": "0.15.1",
     "@dfinity/principal": "0.15.1",
+    "@types/shelljs": "^0.8.11",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "shelljs": "^0.8.5",
     "tslib": "^2.3.1"
   },
   "devDependencies": {

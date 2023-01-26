@@ -14,7 +14,7 @@
     "clean": "./scripts/clean.sh",
     "build:all": "yarn clean && yarn build:types && yarn build:snap && yarn build:adapter && yarn build:example",
     "start:snap": "lerna run serve --scope @astrox/icsnap",
-    "start:example:local": "cd packages/example && yarn run dev",
+    "start:example:local": "cd packages/example && rm -rf .dfx && dfx deploy && yarn run dev",
     "start:example:production": "cd packages/example && yarn run dev",
     "bootstrap": "lerna bootstrap",
     "demo:local": "concurrently  --raw --kill-others \"yarn run start:snap\" \"yarn run start:example:local\""

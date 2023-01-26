@@ -3,6 +3,9 @@ import logo from "./assets/logo-dark.svg"
 import { initiateICPSnap } from "./services/metamask"
 import { SnapIdentity } from "@astrox/icsnap-adapter"
 import { SignRawMessageResponse } from "@astrox/icsnap-types"
+import { Actor, ActorSubclass, AnonymousIdentity } from "@dfinity/agent"
+import { counter, createActor } from "./services"
+import { _SERVICE as counterService } from "./services/counter.did"
 // import { canisterId, createActor } from "./services"
 
 export function Intro() {
@@ -17,6 +20,12 @@ export function Intro() {
   const [snapIdentity, setSnapIdentity] = useState<SnapIdentity | undefined>(
     undefined,
   )
+  const [counterActor, setCounterActor] = useState<
+    ActorSubclass<counterService> | undefined
+  >(undefined)
+
+  const [counterVal, setCounterVal] = useState<bigint>(BigInt(0))
+  const [loading, setLoading] = useState<boolean>(false)
 
   const installSnap = useCallback(async () => {
     const installResult = await initiateICPSnap()
@@ -25,17 +34,37 @@ export function Intro() {
     } else {
       setInstalled(true)
       setSnapIdentity(await installResult.snap?.createSnapIdentity())
+      setCounter(await installResult.snap?.createSnapIdentity())
     }
   }, [])
 
   const getPrincipal = async () => {
     setPrincipal(snapIdentity?.getPrincipal()!.toText())
+    await getCounterVal()
   }
 
   const signMessage = async () => {
     const signed = await snapIdentity?.signRawMessage(message!)
     console.log({ signed })
     setSignedMessage(signed!)
+  }
+
+  const setCounter = (identity: SnapIdentity | undefined) => {
+    const result = createActor(process.env.COUNTER_CANISTER_ID!, {
+      agentOptions: { identity: identity ?? new AnonymousIdentity() },
+    })
+    setCounterActor(result)
+  }
+
+  const increase = async () => {
+    setLoading(true)
+    await counter.increment()
+    setLoading(false)
+  }
+
+  const getCounterVal = async () => {
+    const v = await counter.getValue()
+    setCounterVal(v)
   }
 
   useEffect(() => {
@@ -106,6 +135,29 @@ export function Intro() {
 
         <p style={{ fontSize: "0.6em" }}>ICSnap is running inside metamask</p>
       </header>
+      <div>
+        {!counterActor ? (
+          <>Wait for counter canister is initialised</>
+        ) : (
+          <>
+            <p>
+              {loading
+                ? "Fetching latest counter value..."
+                : counterVal.toString()}
+            </p>
+            <button
+              className="demo-button"
+              onClick={async () => {
+                await increase()
+                await getCounterVal()
+              }}
+            >
+              Increase Counter
+            </button>
+          </>
+        )}
+      </div>
+
       <footer>
         <div
           style={{ textAlign: "center", fontSize: "0.8em", marginTop: "2em" }}
