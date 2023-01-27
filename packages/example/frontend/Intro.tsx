@@ -1,11 +1,17 @@
 import React, { createFactory, useCallback, useEffect, useState } from "react"
 import logo from "./assets/logo-dark.svg"
-import { initiateICPSnap } from "./services/metamask"
+import { initiateICPSnap, requestDelegation } from "./services/metamask"
 import { SnapIdentity } from "@astrox/icsnap-adapter"
 import { SignRawMessageResponse } from "@astrox/icsnap-types"
-import { Actor, ActorSubclass, AnonymousIdentity } from "@dfinity/agent"
+import {
+  Actor,
+  ActorSubclass,
+  AnonymousIdentity,
+  SignIdentity,
+} from "@dfinity/agent"
 import { counter, createActor } from "./services"
 import { _SERVICE as counterService } from "./services/counter.did"
+import { DelegationIdentity, Ed25519KeyIdentity } from "@dfinity/identity"
 // import { canisterId, createActor } from "./services"
 
 export function Intro() {
@@ -26,6 +32,12 @@ export function Intro() {
 
   const [counterVal, setCounterVal] = useState<bigint>(BigInt(0))
   const [loading, setLoading] = useState<boolean>(false)
+
+  const [delegationIdentity, setDelegationIdentity] = useState<
+    DelegationIdentity | undefined
+  >(undefined)
+
+  const [sessionKey, setSessionKey] = useState<SignIdentity | undefined>()
 
   const installSnap = useCallback(async () => {
     const installResult = await initiateICPSnap()
@@ -65,6 +77,13 @@ export function Intro() {
   const getCounterVal = async () => {
     const v = await counter.getValue()
     setCounterVal(v)
+  }
+
+  const createDelegationIdentity = async () => {
+    const sk = Ed25519KeyIdentity.generate()
+    const delgation = await requestDelegation(snapIdentity!, { sessionKey: sk })
+    setSessionKey(sk)
+    setDelegationIdentity(delgation)
   }
 
   useEffect(() => {
@@ -135,27 +154,94 @@ export function Intro() {
 
         <p style={{ fontSize: "0.6em" }}>ICSnap is running inside metamask</p>
       </header>
-      <div>
-        {!counterActor ? (
-          <>Wait for counter canister is initialised</>
-        ) : (
-          <>
+      <div className="App-body">
+        <div
+          style={{
+            display: "flex",
+            fontSize: "0.7em",
+            textAlign: "left",
+            padding: "2em",
+            borderRadius: "30px",
+            flexDirection: "column",
+            background: "rgb(220 218 224 / 25%)",
+            flex: 1,
+            width: "32em",
+            marginBottom: "2em",
+          }}
+        >
+          {!counterActor ? (
+            <>Wait for counter canister is initialised</>
+          ) : (
+            <>
+              <p>
+                {loading
+                  ? "Fetching latest counter value..."
+                  : counterVal.toString()}
+              </p>
+              <button
+                className="demo-button"
+                onClick={async () => {
+                  await increase()
+                  await getCounterVal()
+                }}
+              >
+                Increase Counter
+              </button>
+            </>
+          )}
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            fontSize: "0.7em",
+            textAlign: "left",
+            padding: "2em",
+            borderRadius: "30px",
+            flexDirection: "column",
+            background: "rgb(220 218 224 / 25%)",
+            flex: 1,
+            width: "32em",
+          }}
+        >
+          <p>Create delegation Identity</p>
+          <div
+            style={{
+              wordBreak: "break-all",
+              maxWidth: "100%",
+              margin: "1em 0",
+            }}
+          >
+            <code>Session Key is : </code>
             <p>
-              {loading
-                ? "Fetching latest counter value..."
-                : counterVal.toString()}
+              {sessionKey
+                ? sessionKey?.getPrincipal().toText()
+                : "press button to create"}
             </p>
-            <button
-              className="demo-button"
-              onClick={async () => {
-                await increase()
-                await getCounterVal()
-              }}
-            >
-              Increase Counter
-            </button>
-          </>
-        )}
+          </div>
+          <div
+            style={{
+              wordBreak: "break-all",
+              maxWidth: "100%",
+              margin: "1em 0",
+            }}
+          >
+            <code>Signed Delegation Chain is : </code>
+            <p>
+              {delegationIdentity
+                ? JSON.stringify(delegationIdentity?.getDelegation().toJSON())
+                : "press button to create"}
+            </p>
+          </div>
+          <button
+            className="demo-button"
+            onClick={async () => {
+              await createDelegationIdentity()
+            }}
+          >
+            Create Delegation
+          </button>
+        </div>
       </div>
 
       <footer>
