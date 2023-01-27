@@ -81,9 +81,11 @@ export function Intro() {
 
   const createDelegationIdentity = async () => {
     const sk = Ed25519KeyIdentity.generate()
-    const delgation = await requestDelegation(snapIdentity!, { sessionKey: sk })
+    const delegation = await requestDelegation(snapIdentity!, {
+      sessionKey: sk,
+    })
     setSessionKey(sk)
-    setDelegationIdentity(delgation)
+    setDelegationIdentity(delegation)
   }
 
   useEffect(() => {
